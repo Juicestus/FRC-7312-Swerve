@@ -97,7 +97,14 @@ public class SwerveModule {
     }
 
     public SwerveModulePosition getPosition() {
-        return null;
+        final double degreesOfWheel = Conversions.falconToDegrees(mDriveMotor.getSelectedSensorPosition(), Constants.Swerve.driveGearRatio);
+        final double rotationsOfWheel = degreesOfWheel / 360.0;
+        final double distanceOfWheel = rotationsOfWheel * Constants.Swerve.wheelCircumference;
+
+        final Rotation2d angle = Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
+
+        return new SwerveModulePosition(distanceOfWheel, angle);
+
     }
     
 }
